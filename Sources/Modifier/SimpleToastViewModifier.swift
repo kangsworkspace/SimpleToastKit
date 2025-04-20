@@ -21,6 +21,7 @@ struct ToastViewModifier: ViewModifier {
                     
                     stk.toastContent
                 }
+                .transition(stk.animation.transition)
             }
         }
     }
