@@ -8,18 +8,38 @@
 import Foundation
 import SwiftUI
 
-protocol STKAnimation {
+/// A protocol that defines the animation and transition used in a toast presentation.
+///
+/// The protocol has ``STKAnimation/transition`` to use with SwiftUI view transitions,
+/// and an ``STKAnimation/animation`` that determines how the transition is animated.
+public protocol STKAnimation {
+    /// The SwiftUI transition to be applied when the toast appears or disappears.
     var transition: AnyTransition { get }
+    /// The animation used during the transition.
     var animation: Animation { get }
 }
 
-enum STKAnimationStyle {
-    case fade
-    case scaledFade
-    case slideBottom
-    case slideLeft
-    case slideRight
 
+/// Predefined animation styles for presenting and dismissing toast views.
+///
+/// Each style maps to a concrete implementation of the ``STKAnimation`` protocol.
+public enum STKAnimationStyle {
+    /// Basic fade in/out animation using opacity
+    case fade
+    
+    /// Appears from the front and fades out toward the back, using a combination of scale and opacity transitions.
+    case scaledFade
+    
+    /// Slides in from the bottom and exits to the bottom. using move and opacity
+    case slideBottom
+    
+    /// Slides in from the left and exits to the left. using move and opacity
+    case slideLeft
+    
+    /// Slides in from the right and exits to the right. using move and opacity
+    case slideRight
+    
+    /// The concrete `STKAnimation` associated with the selected style.
     var animation: STKAnimation {
         switch self {
         case .fade:

@@ -8,20 +8,35 @@
 import Foundation
 import SwiftUI
 
+
+
+/// A singleton class that manages the presentation of toast views.
+///
+/// Use the `STK` class to easily create and configure simple toast views.
 @MainActor
-final class STK: ObservableObject {
+public final class STK: ObservableObject {
     static let shared = STK()
     private init(){}
     
-    @Published var isPresented: Bool = false
-    @Published var toastContent: AnyView = AnyView(EmptyView())
-    @Published var animation: STKAnimation = FadeAnimation()
+    @Published private(set) var isPresented: Bool = false
+    @Published private(set) var toastContent: AnyView = AnyView(EmptyView())
+    @Published private(set) var animation: STKAnimation = FadeAnimation()
     private var isFloated: Bool = false
     
-    func showToastView(holdSec: Double = 2.0,
-                       animation: STKAnimationStyle = .fade,
-                       animated: Bool = true,
-                       @ViewBuilder content: @escaping () -> some View
+    /// Displays a toast view with the specified content and animation.
+    ///
+    /// This method presents a toast view for a given duration. If `animated` is true,
+    /// the presentation and dismissal will use the selected animation style.
+    ///
+    /// - Parameters:
+    ///   - holdSec: The number of seconds the toast remains visible. Defaults to 1.4.
+    ///   - animation: The style of animation used to present and dismiss the toast. Defaults to ``STKAnimationStyle/fade``.
+    ///   - animated: Whether to animate the presentation and dismissal. Defaults to true
+    ///   - content: A view builder that provides the content of the toast.
+    public func showToastView(holdSec: Double = 1.4,
+                              animation: STKAnimationStyle = .fade,
+                              animated: Bool = true,
+                              @ViewBuilder content: @escaping () -> some View
     ) {
         guard !isFloated else { return }
         isFloated = true
