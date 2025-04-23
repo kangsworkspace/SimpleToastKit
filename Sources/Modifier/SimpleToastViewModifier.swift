@@ -8,10 +8,16 @@
 import Foundation
 import SwiftUI
 
-struct ToastViewModifier: ViewModifier {
+/// Makes the view toastable.
+///
+/// This modifier enables the view to display toast view using the `STK` class,
+/// and applies toast animation effects.
+/// > Important: You must make the view toastable to use `SimpleToastKit`.
+/// - Returns: Returns A view modified with `ToastViewModifier`
+public struct ToastViewModifier: ViewModifier {
     @ObservedObject var stk = STK.shared
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         ZStack {
             content
             
