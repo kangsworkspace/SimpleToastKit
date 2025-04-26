@@ -8,10 +8,10 @@
 import SwiftUI
 
 public extension View {
-    /// Apply ``ToastViewModifier``  to the view .
+    /// Apply ``STKModifier``  to the view .
     ///
-    /// This function apply `ToastViewModifier`  to the view .
-    /// 
+    /// This function apply `STKModifier`  to the view .
+    ///
     /// ```swift
     /// Struct SomeViewToToast: View {
     ///     var body: some View {
@@ -26,6 +26,6 @@ public extension View {
     /// Otherwise, it may cause unexpected behavior or conflicts.
     /// - Returns: Returns A view modified with `ToastViewModifier`
     func toastable() -> some View {
-        self.modifier(ToastViewModifier())
+        self.modifier(STKModifier(toastState: STK.internalShared))
     }
 }
