@@ -1,11 +1,10 @@
-//
+////
 //  File.swift
 //  SimpleToastKit
 //
-//  Created by 강건 on 4/20/25.
+//  Created by 강건 on 4/25/25.
 //
 
-import Foundation
 import SwiftUI
 
 /// Makes the view toastable.
@@ -14,20 +13,20 @@ import SwiftUI
 /// and applies toast animation effects.
 /// > Important: You must make the view toastable to use `SimpleToastKit`.
 /// - Returns: Returns A view modified with `ToastViewModifier`
-public struct ToastViewModifier: ViewModifier {
-    @ObservedObject var stk = STK.shared
+internal struct STKModifier<ToastState: STKStateProvider>: ViewModifier {
+    @ObservedObject var toastState: ToastState
     
     public func body(content: Content) -> some View {
         ZStack {
             content
             
-            if stk.isPresented {
+            if toastState.isToastActive {
                 VStack {
                     Spacer()
                     
-                    stk.toastContent
+                    toastState.toastContent
                 }
-                .transition(stk.animation.transition)
+                .transition(toastState.animationStyle.transition)
             }
         }
     }
