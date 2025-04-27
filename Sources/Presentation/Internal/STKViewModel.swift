@@ -97,7 +97,7 @@ extension STKViewModel: STKStateProvider {
 }
 
 extension STKViewModel: STKTrigger {
-    public func showToastView<Content: View>(
+    public func show<Content: View>(
         holdSec: Double = 2,
         animationStyle: STKAnimationStyle = STKAnimationStyle.fade,
         animated: Bool = true,
