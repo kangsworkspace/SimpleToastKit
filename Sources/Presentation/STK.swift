@@ -21,7 +21,7 @@ public enum STK {
     ///   This property exposes the `STKTrigger` protocol, ensuring
     ///   a stable and safe interface for public use.
     @MainActor
-    public static let shared: some STKTrigger = STKViewModel.shared
+    public static let toast: some STKTrigger = STKViewModel.shared
     
     /// The internal singleton instance for view-to-viewmodel communication.
     ///
