@@ -11,6 +11,7 @@
 - [ ] refactor: Code refactoring
 - [ ] style: Code cleanup, folder structure adjustments
 - [ ] docs: Documentation updates
+- [ ] chore: Release preparation work
 
 ---
 

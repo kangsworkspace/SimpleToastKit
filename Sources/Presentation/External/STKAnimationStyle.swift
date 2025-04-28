@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Predefined animation styles for presenting and dismissing toast views.
 ///
-/// Each style maps to a concrete implementation of the ``STKAnimationProtocol``.
+/// Each style maps to a concrete implementation of the `STKAnimationProtocol`.
 public enum STKAnimationStyle {
     /// Basic fade in/out animation using opacity
     case fade
