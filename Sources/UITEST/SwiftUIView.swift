@@ -13,7 +13,7 @@ struct SwiftUIView: View {
     var body: some View {
         VStack {
             Button {
-                STK.shared.showToastView(holdSec: 1.0, animation: .fade) {
+                STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade, animated: true) {
                     SampleTastView()
                 }
             } label: {
