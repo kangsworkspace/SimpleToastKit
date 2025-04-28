@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension View {
-    /// Apply ``STKModifier``  to the view .
+    /// Apply `STKModifier`  to the view .
     ///
     /// This function apply `STKModifier`  to the view .
     ///
