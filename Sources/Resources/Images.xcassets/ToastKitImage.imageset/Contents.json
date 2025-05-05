@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ToastKitImage.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
