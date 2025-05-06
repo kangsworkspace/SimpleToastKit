@@ -13,7 +13,7 @@
 
 - **1. When using a custom view**
   
-  Trigger the toast view by accessing `STK.shared` and calling the `showToastView` function.  
+  Trigger the toast view by accessing `STK.toast` and calling the `show` function.  
 Pass your custom view inside the closure.  
 
 ```swift
@@ -22,7 +22,7 @@ import SimpleToastKit
 var body: some View {
     VStack {
         Button {
-            STK.shared.showToastView(holdSec: 1.0, animationStyle: .scaledFade, animated: true) {
+            STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade) {
                 YourCustomView()
             }
         } label: {
@@ -59,18 +59,17 @@ VStack {
   
 ## When using a custom view
 
-Trigger the toast view by accessing `STK.shared` and calling the `showToastView` function. 
+Trigger the toast view by accessing `STK.toast` and calling the `show` function. 
 
 ### Parameters
 
 - **holdSec**: The number of seconds the toast view remains visible.
 - **animationStyle**: The animation style used for presenting and dismissing the toast.
-- **animated**: A Boolean value indicating whether to animate the appearance and disappearance.
 - **content**: A view builder closure that provides the custom content for the toast.
 
 ```swift
 Button {
-    STK.shared.showToastView(holdSec: 1.0, animationStyle: .scaledFade, animated: true) {
+    STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade) {
         YourCustomView()
     }
 } label: {
