@@ -13,7 +13,7 @@
 
 - **1. When using a custom view**
   
-  Trigger the toast view by accessing `STK.shared` and calling the `showToastView` function.  
+  Trigger the toast view by accessing `STK.toast` and calling the `show` function.  
 Pass your custom view inside the closure.  
 
 ```swift
@@ -22,7 +22,7 @@ import SimpleToastKit
 var body: some View {
     VStack {
         Button {
-            STK.shared.showToastView(holdSec: 1.0, animationStyle: .scaledFade, animated: true) {
+            STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade) {
                 YourCustomView()
             }
         } label: {
@@ -33,6 +33,32 @@ var body: some View {
 }
 ```
 
+<br/>
+
+- **2. When using simple toast views**
+  
+  Trigger the simple toast view by accessing `STK.toast` and calling the `showSimple` function.  
+Pass `SimpleToast` inside the closure.  
+
+```swift
+import SimpleToastKit
+
+var body: some View {
+    VStack {
+        Button {
+            STK.toast.showSimple {
+                SimpleToast(message: "Message is Required")
+            }
+        } label: {
+            Text("Show Simple Toast View")
+                .foregroundStyle(Color.black)
+        }
+    }
+    .toastable() // to the root view you want to show the toast on.
+}
+```
+
+<br/>
   
 # 🛠 How to use
 
@@ -56,21 +82,21 @@ VStack {
 .toastable()
 ```
 
+<br/>
   
 ## When using a custom view
 
-Trigger the toast view by accessing `STK.shared` and calling the `showToastView` function. 
+Trigger the toast view by accessing `STK.toast` and calling the `show` function. 
 
 ### Parameters
 
 - **holdSec**: The number of seconds the toast view remains visible.
 - **animationStyle**: The animation style used for presenting and dismissing the toast.
-- **animated**: A Boolean value indicating whether to animate the appearance and disappearance.
 - **content**: A view builder closure that provides the custom content for the toast.
 
 ```swift
 Button {
-    STK.shared.showToastView(holdSec: 1.0, animationStyle: .scaledFade, animated: true) {
+    STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade) {
         YourCustomView()
     }
 } label: {
@@ -78,7 +104,7 @@ Button {
 }
 ```
 
-You can also use the simplified method by omitting the parameters.  
+You can also use the **simplified method** by omitting the parameters.  
 
 ```swift
 Button {
@@ -90,6 +116,82 @@ Button {
 }
 ```
 
+<br/>
+
+## When using simple toast views
+
+Trigger the toast view by accessing `STK.toast` and calling the `showSimple` function.  
+**Pass `SimpleToast` inside the closure.**  
+
+```swift
+STK.toast.showSimple {
+    SimpleToast(message: "Simplest way") // Should return SimpleToast()
+}
+```
+
+### SimpleToast
+
+The structure simple 토스트 뷰를 보여주기 위한.
+파라미터와 모디파이어 형식의 함수?를 지원.
+
+#### parameter
+
+- **message**: The text that you want to display on the toast view **(required)**
+- **holdSec**: The number of seconds the simple toast view remains visible.
+
+#### modifiers
+- **.toastAnimation**: The animation style used for presenting and dismissing the toast.
+- **.toastShape**: Configures the shape and styling of the toast. Each shape supports specific customization parameters.
+
+```swift
+Button {
+    STK.toast.showSimple {
+        SimpleToast(message: "Message is required", holdSec: 2.0)
+            .toastAnimation(STKAnimationStyle.scaledFade)
+            .toastShape(
+                .roundedRectangle(
+                    alignment: .leading,
+                    messageColor: Color.white,
+                    messageFont: .headline,
+                    title: "Some Title",
+                    titleFont: .title,
+                    titleColor: Color.yellow,
+                    leadingImage: Image("ToastKitImage", bundle: .module),
+                    trailingImage: Image("ToastKitImage", bundle: .module),
+                    backgroundColor: Color.black,
+                    cornerRadius: 12,
+                    insetVerticalPadding: 12,
+                    insetHorizontalPadding: 24
+                )
+            )
+    }
+} label: {
+    Text("Show Simple Toast View")
+        .foregroundStyle(Color.black)
+}
+```
+
+
+You can also use the **simplified method** by omitting the parameters.  
+However, the message is always required.
+
+```swift
+Button {
+    STK.toast.showSimple {
+        SimpleToast(message: "Simplest way")
+    }
+} label: {
+    Text("Show Simple Toast View")
+        .foregroundStyle(Color.black)
+}
+```
+
+<br/>
+
+# 🏗️ Architecture structure
+<img width="1072" alt="Image" src="https://github.com/user-attachments/assets/81db509e-52e0-43a6-ab42-2d26e8a000ed" />
+
+<br/>
 
 # 📦 Installation
 

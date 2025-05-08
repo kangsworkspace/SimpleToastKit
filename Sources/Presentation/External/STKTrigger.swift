@@ -21,21 +21,28 @@ public protocol STKTrigger {
     /// - Parameters:
     ///   - holdSec: The number of seconds the toast view remains visible.
     ///   - animationStyle: The animation style used for presenting and dismissing the toast.
-    ///   - animated: A Boolean value indicating whether to animate the appearance and disappearance.
     ///   - content: A view builder closure that provides the custom content for the toast.
     @MainActor
     func show<Content: View>(
         holdSec: Double,
         animationStyle: STKAnimationStyle,
-        animated: Bool,
         @ViewBuilder content: () -> Content
+    )
+    
+    
+    /// Displays a toast view with the specified configuration.
+    ///
+    /// - Parameters:
+    ///   - simpleToast: A ``SimpleToast`` type struct.
+    @MainActor
+    func showSimple(
+        simpleToast: () -> SimpleToast
     )
 }
 
+// MARK: - Convenience Overloads for show()
+
 public extension STKTrigger {
-    /// Displays a toast view with the specified duration and animation style, using default animation behavior.
-    ///
-    /// The toast view will animate by default.
     @MainActor
     func show<Content: View>(
         holdSec: Double,
@@ -45,12 +52,10 @@ public extension STKTrigger {
         show(
             holdSec: holdSec,
             animationStyle: animationStyle,
-            animated: true,
             content: content
         )
     }
     
-    /// Displays a toast view with the specified duration, using the default fade animation style and animation behavior.
     @MainActor
     func show<Content: View>(
         holdSec: Double,
@@ -59,14 +64,10 @@ public extension STKTrigger {
         show(
             holdSec: holdSec,
             animationStyle: .fade,
-            animated: true,
             content: content
         )
     }
     
-    /// Displays a toast view with specified animation
-    ///
-    /// Uses a duration of 1.4 seconds, and animation enabled.
     @MainActor
     func show<Content: View>(
         animationStyle: STKAnimationStyle,
@@ -75,14 +76,10 @@ public extension STKTrigger {
         show(
             holdSec: 1.4,
             animationStyle: animationStyle,
-            animated: true,
             content: content
         )
     }
     
-    /// Displays a toast view with default settings.
-    ///
-    /// Uses a duration of 1.4 seconds, a fade animation style, and animation enabled.
     @MainActor
     func show<Content: View>(
         @ViewBuilder content: () -> Content
@@ -90,7 +87,6 @@ public extension STKTrigger {
         show(
             holdSec: 1.4,
             animationStyle: .fade,
-            animated: true,
             content: content
         )
     }

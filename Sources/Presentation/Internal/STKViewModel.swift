@@ -17,24 +17,30 @@ import Combine
 ///   This class is internal and not intended for direct use by external users.
 internal final class STKViewModel: ObservableObject {
     /// The shared singleton instance for managing the toast system.
-    @MainActor static let shared = STKViewModel(activateToastViewUseCase: STKUseCase())
+    @MainActor static let shared = STKViewModel(usecase: STKUseCase())
     
     /// The current state of the toast view.
-    @Published private(set) var state: State = State()
-
+    @Published private var state: State = State()
+    
     private let usecase: STKUseCaseProtocol
     private var cancellables: Set<AnyCancellable> = []
-    
-    private init(activateToastViewUseCase: STKUseCaseProtocol) {
-        self.usecase = activateToastViewUseCase
-    }
+    private init(usecase: STKUseCaseProtocol) { self.usecase = usecase }
 }
+
+
+// MARK: MVI Patthern - State & Intent & send()
 
 extension STKViewModel {
     /// A structure that represents the state of the toast view.
     struct State {
-        /// Indicates whether the toast view is currently active (visible).
+        /// Indicates whether the custom toast view is currently active (visible).
         var isToastActive: Bool = false
+        
+        /// Indicates whether the toast view is currently active (visible).
+        var isSimpleToastActive: Bool = false
+        
+        /// A Structure that contains Data for build SimpleToastView
+        var simpleToast: SimpleToast = SimpleToast(message: "Default")
         
         /// The custom content displayed in the toast view.
         var toastContent: AnyView = AnyView(EmptyView())
@@ -47,12 +53,11 @@ extension STKViewModel {
     ///
     /// Defines the various actions that can be performed related to the toast system.
     private enum Intent {
-        /// Intent to activate a toast view with the given parameters.
+        /// Intent to activate a toast view with the given associated values.
         case activateToastView(ToastViewData)
+        case activateSimpleToastView(SimpleToast)
     }
-}
-
-extension STKViewModel {
+    
     /// Sends an intent to the view model for processing.
     ///
     /// - Parameter intent: The intent representing a user.
@@ -61,9 +66,14 @@ extension STKViewModel {
         switch intent {
         case .activateToastView(let toastViewData):
             handleActivateToastView(toastViewData)
+        case .activateSimpleToastView(let simpleToastData):
+            handleActiveSimpleToastView(simpleToastData)
         }
     }
 }
+
+
+// MARK: Handle intent
 
 extension STKViewModel {
     /// Handles the activation of a toast view based on the provided data.
@@ -78,29 +88,46 @@ extension STKViewModel {
                 self?.state.toastContent = AnyView(toastViewData.content)
                 self?.state.animationStyle = toastViewData.animationStyle
                 
-                if toastViewData.animated {
-                    withAnimation(toastViewData.animationStyle.animation) {
-                        self?.state.isToastActive = toastActiveState
-                    }
-                } else {
+                withAnimation(toastViewData.animationStyle.animation) {
                     self?.state.isToastActive = toastActiveState
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func handleActiveSimpleToastView(_ simpleToast: SimpleToast) {
+        usecase.setSimpleToastViewTimer(holdSec: simpleToast.holdSec)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] simpleToastActiveState in
+                self?.state.simpleToast = simpleToast
+                self?.state.animationStyle = simpleToast.animationStyle
+                
+                withAnimation(simpleToast.animationStyle.animation) {
+                    self?.state.isSimpleToastActive = simpleToastActiveState
                 }
             }
             .store(in: &cancellables)
     }
 }
 
+
+// MARK: STKStateProvider - Provides State to modifier
+
 extension STKViewModel: STKStateProvider {
     public var isToastActive: Bool { state.isToastActive }
+    public var isSimpeToastActive: Bool { state.isSimpleToastActive }
+    public var simpleToast: SimpleToast { state.simpleToast }
     public var toastContent: AnyView { state.toastContent }
     public var animationStyle: STKAnimationStyle { state.animationStyle }
 }
 
+
+// MARK: STKTrigger - Accept user action
+
 extension STKViewModel: STKTrigger {
     public func show<Content: View>(
-        holdSec: Double = 2,
-        animationStyle: STKAnimationStyle = STKAnimationStyle.fade,
-        animated: Bool = true,
+        holdSec: Double = STKDefaults.holdSec,
+        animationStyle: STKAnimationStyle = STKDefaults.animationStyle,
         @ViewBuilder content: () -> Content
     ) {
         let anyView = AnyView(content())
@@ -111,9 +138,22 @@ extension STKViewModel: STKTrigger {
                     ToastViewData(
                         holdSec: holdSec,
                         animationStyle: animationStyle,
-                        animated: animated,
                         content: anyView
                     )
+                )
+            )
+        }
+    }
+    
+    public func showSimple(
+        simpleToast: () -> SimpleToast
+    ) {
+        let simpleToast = simpleToast()
+        
+        Task {
+            await send(
+                .activateSimpleToastView(
+                    simpleToast
                 )
             )
         }

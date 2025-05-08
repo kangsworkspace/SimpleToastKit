@@ -9,8 +9,10 @@ import SwiftUI
 
 /// Predefined animation styles for presenting and dismissing toast views.
 ///
-/// Each style maps to a concrete implementation of the `STKAnimationProtocol`.
+/// Each style maps to a concrete implementation of the `STKAnimationProtocol`
 public enum STKAnimationStyle {
+    /// No animation
+    case none
     /// Basic fade in/out animation using opacity
     case fade
     /// Appears from the front and fades out toward the back, using a combination of scale and opacity transitions.
@@ -30,6 +32,8 @@ extension STKAnimationStyle: STKAnimationProtocol {
     /// Determines how the toast view appears and disappears based on the selected style.
     public var transition: AnyTransition {
         switch self {
+        case .none:
+            return AnyTransition.identity
         case .fade:
             return AnyTransition.opacity
         case .scaledFade:
@@ -50,6 +54,8 @@ extension STKAnimationStyle: STKAnimationProtocol {
     /// Defines the timing and motion effect used during the transition.
     public var animation: Animation {
         switch self {
+        case .none:
+            return .default
         case .fade:
             return .easeInOut(duration: 0.3)
         case .scaledFade:

@@ -26,6 +26,16 @@ internal protocol STKUseCaseProtocol {
     /// - Returns:
     ///   An `AnyPublisher<Bool, Never>` that return the toast view's active state changes.
     func setToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never>
+    
+    /// Sets a timer that controls the visibility of a toast view.
+    ///
+    /// Immediately return `true` to indicate that the toast should appear,
+    /// and then return `false` after the specified `holdSec` duration to indicate that the toast should disappear.
+    ///
+    /// - Parameter holdSec: The number of seconds the toast view remains visible.
+    /// - Returns:
+    ///   An `AnyPublisher<Bool, Never>` that return the toast view's active state changes.
+    func setSimpleToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never>
 }
 
 /// The default implementation of `STKUseCaseProtocol`.
@@ -34,6 +44,15 @@ internal protocol STKUseCaseProtocol {
 /// toast view visibility based on a timer mechanism.
 internal struct STKUseCase: STKUseCaseProtocol {
     internal func setToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never> {
+        Just(true)
+            .append(
+                Just(false)
+                    .delay(for: .seconds(holdSec), scheduler: RunLoop.main)
+            )
+            .eraseToAnyPublisher()
+    }
+    
+    internal func setSimpleToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never> {
         Just(true)
             .append(
                 Just(false)

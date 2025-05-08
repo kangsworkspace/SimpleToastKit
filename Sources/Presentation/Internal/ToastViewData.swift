@@ -21,8 +21,6 @@ internal struct ToastViewData {
     let holdSec: Double
     /// The animation style applied when presenting and dismissing the toast view.
     let animationStyle: STKAnimationStyle
-    /// A Boolean value that determines whether the toast view uses animation.
-    let animated: Bool
     /// The custom view content displayed inside the toast view.
     ///
     /// This content is provided as an 'AnyView' to allow flexible customization internally
