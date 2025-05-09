@@ -17,11 +17,25 @@ import SwiftUI
 ///   This protocol is intended for internal use only and should not be accessed by external users.
 internal protocol STKStateProvider: ObservableObject {
     
-    /// A Boolean value that indicates whether the toast view is currently active (visible).
+    // MARK: Custom Toast View
+    
+    /// A Boolean value that indicates whether the custom toast view is currently active (visible).
     var isToastActive: Bool { get }
     
     /// The custom view content currently displayed in the toast.
     var toastContent: AnyView { get }
+    
+    
+    // MARK: Simple Toast View
+    
+    /// A Boolean value that indicates whether the toast view is currently active (visible).
+    var isSimpeToastActive: Bool { get }
+    
+    /// A Structure that contains Data for build SimpleToastView
+    var simpleToast: SimpleToast { get }
+    
+    
+    // MARK: Common
     
     /// The animation style applied to the toast's appearance and disappearance.
     var animationStyle: STKAnimationStyle { get }
