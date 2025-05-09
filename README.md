@@ -131,8 +131,8 @@ STK.toast.showSimple {
 
 ### SimpleToast
 
-The structure simple 토스트 뷰를 보여주기 위한.
-파라미터와 모디파이어 형식의 함수?를 지원.
+A structure used to display a simple toast view.  
+SimpleToast can be customized using modifier-style functions.
 
 #### parameter
 
