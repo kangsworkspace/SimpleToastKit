@@ -25,7 +25,14 @@ public struct SimpleToast {
     internal var shape: SimpleToastShape = .roundedRectangle()
     internal var animationStyle: STKAnimationStyle = STKDefaults.animationStyle
     
-    init(message: String, holdSec: Double = STKDefaults.holdSec) {
+    // Initializer for only set message
+    public init(message: String) {
+        self.message = message
+        self.holdSec = STKDefaults.holdSec
+    }
+    
+    // Initializer fot set message with holdSec
+    public init(message: String, holdSec: Double) {
         self.message = message
         self.holdSec = holdSec
     }
@@ -34,13 +41,13 @@ public struct SimpleToast {
 // MARK: - SimpleToast Modifiers
 
 extension SimpleToast {
-    func toastAnimation(_ animation: STKAnimationStyle) -> SimpleToast {
+    public func toastAnimation(_ animation: STKAnimationStyle) -> SimpleToast {
         var copy = self
         copy.animationStyle = animation
         return copy
     }
     
-    func toastShape(_ shape: SimpleToastShape) -> SimpleToast {
+    public func toastShape(_ shape: SimpleToastShape) -> SimpleToast {
         var copy = self
         copy.shape = shape
         return copy
