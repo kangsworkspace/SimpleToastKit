@@ -13,7 +13,7 @@
 
 - **1. When using a custom view**
   
-  Trigger the toast view by accessing `STK.toast` and calling the `show` function.  
+ Trigger the toast view by accessing `STK.toast` and calling the `show` function.  
 Pass your custom view inside the closure.  
 
 ```swift

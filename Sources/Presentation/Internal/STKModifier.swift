@@ -121,4 +121,3 @@ internal struct STKModifier<ToastState: STKStateProvider>: ViewModifier {
         }
     }
 }
-
