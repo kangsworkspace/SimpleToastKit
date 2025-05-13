@@ -8,19 +8,6 @@
 
 > **The simplest way to show toast view in your SwiftUI project.**
   
-  
-# 📒 Latest Release Note 
-### Added
-- 
-  
-### Fixed
-- Slide bottom animation now dismisses correctly. (2025-05-11)  
-  A bug where the toast view disappeared with a fade animation instead of sliding back to the bottom has been resolved.
-  
-### Changed
-- 
-
-
 # 👀 At a glance 
 **Show the toast view like this:**
 
