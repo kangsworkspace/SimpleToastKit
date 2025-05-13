@@ -24,8 +24,6 @@ public struct SimpleToast {
     
     internal var shape: SimpleToastShape = .roundedRectangle()
     internal var animationStyle: STKAnimationStyle = STKDefaults.animationStyle
-    internal var bottomPadding: CGFloat = 0
-    internal var topPadding: CGFloat = 0
     
     // Initializer for only set message
     public init(message: String) {
@@ -52,18 +50,6 @@ extension SimpleToast {
     public func toastShape(_ shape: SimpleToastShape) -> SimpleToast {
         var copy = self
         copy.shape = shape
-        return copy
-    }
-    
-    public func bottomPadding(_ padding: CGFloat) -> SimpleToast {
-        var copy = self
-        copy.bottomPadding = padding
-        return copy
-    }
-    
-    public func topPadding(_ padding: CGFloat) -> SimpleToast {
-        var copy = self
-        copy.bottomPadding = padding
         return copy
     }
 }

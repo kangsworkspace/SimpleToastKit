@@ -61,7 +61,7 @@ extension STKAnimationStyle: STKAnimationProtocol {
         case .scaledFade:
             return Animation.easeInOut(duration: 0.3)
         case .slideBottom:
-            return Animation.easeInOut(duration: 0.4)
+            return Animation.spring(duration: 0.4, bounce: 0.1)
         case .slideLeft:
             return Animation.easeInOut(duration: 0.4)
         case .slideRight:
