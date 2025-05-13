@@ -11,7 +11,9 @@
   
 # 📒 Latest Release Note 
 ### Added
-- 
+- Add padding option to SimpleToast. (2025-05-13)  
+  This option was added because the toast view was positioned directly above the tab bar,  
+  which made it necessary to provide a padding option.
   
 ### Fixed
 - Slide bottom animation now dismisses correctly. (2025-05-11)  
