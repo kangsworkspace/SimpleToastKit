@@ -13,4 +13,6 @@ internal enum STKDefaults {
     static let holdSec: Double = 1.4
     /// Default value is `STKAnimationStyle.fade`
     static let animationStyle: STKAnimationStyle = .fade
+    /// Default value is `STKAlignment.bottom`
+    static let alignemnt: STKAlignment = .bottom
 }

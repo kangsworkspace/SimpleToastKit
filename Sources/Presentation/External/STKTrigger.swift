@@ -22,10 +22,12 @@ public protocol STKTrigger {
     ///   - holdSec: The number of seconds the toast view remains visible.
     ///   - animationStyle: The animation style used for presenting and dismissing the toast.
     ///   - content: A view builder closure that provides the custom content for the toast.
+    ///   - alignment: The position where the toast view will appear.
     @MainActor
     func show<Content: View>(
         holdSec: Double,
         animationStyle: STKAnimationStyle,
+        alignment: STKAlignment,
         @ViewBuilder content: () -> Content
     )
     
@@ -45,6 +47,34 @@ public protocol STKTrigger {
 public extension STKTrigger {
     @MainActor
     func show<Content: View>(
+        animationStyle: STKAnimationStyle,
+        alignment: STKAlignment,
+        @ViewBuilder content: () -> Content
+    ) {
+        show(
+            holdSec: STKDefaults.holdSec,
+            animationStyle: animationStyle,
+            alignment: alignment,
+            content: content,
+        )
+    }
+    
+    @MainActor
+    func show<Content: View>(
+        holdSec: Double,
+        alignment: STKAlignment,
+        @ViewBuilder content: () -> Content
+    ) {
+        show(
+            holdSec: holdSec,
+            animationStyle: STKDefaults.animationStyle,
+            alignment: alignment,
+            content: content,
+        )
+    }
+    
+    @MainActor
+    func show<Content: View>(
         holdSec: Double,
         animationStyle: STKAnimationStyle,
         @ViewBuilder content: () -> Content
@@ -52,7 +82,34 @@ public extension STKTrigger {
         show(
             holdSec: holdSec,
             animationStyle: animationStyle,
-            content: content
+            alignment: STKDefaults.alignemnt,
+            content: content,
+        )
+    }
+    
+    @MainActor
+    func show<Content: View>(
+        alignment: STKAlignment,
+        @ViewBuilder content: () -> Content
+    ) {
+        show(
+            holdSec: STKDefaults.holdSec,
+            animationStyle: STKDefaults.animationStyle,
+            alignment: alignment,
+            content: content,
+        )
+    }
+    
+    @MainActor
+    func show<Content: View>(
+        animationStyle: STKAnimationStyle,
+        @ViewBuilder content: () -> Content
+    ) {
+        show(
+            holdSec: STKDefaults.holdSec,
+            animationStyle: animationStyle,
+            alignment: STKDefaults.alignemnt,
+            content: content,
         )
     }
     
@@ -63,20 +120,9 @@ public extension STKTrigger {
     ) {
         show(
             holdSec: holdSec,
-            animationStyle: .fade,
-            content: content
-        )
-    }
-    
-    @MainActor
-    func show<Content: View>(
-        animationStyle: STKAnimationStyle,
-        @ViewBuilder content: () -> Content
-    ) {
-        show(
-            holdSec: 1.4,
-            animationStyle: animationStyle,
-            content: content
+            animationStyle: STKDefaults.animationStyle,
+            alignment: STKDefaults.alignemnt,
+            content: content,
         )
     }
     
@@ -85,9 +131,10 @@ public extension STKTrigger {
         @ViewBuilder content: () -> Content
     ) {
         show(
-            holdSec: 1.4,
-            animationStyle: .fade,
-            content: content
+            holdSec: STKDefaults.holdSec,
+            animationStyle: STKDefaults.animationStyle,
+            alignment: STKDefaults.alignemnt,
+            content: content,
         )
     }
 }

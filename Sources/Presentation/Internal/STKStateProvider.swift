@@ -39,4 +39,7 @@ internal protocol STKStateProvider: ObservableObject {
     
     /// The animation style applied to the toast's appearance and disappearance.
     var animationStyle: STKAnimationStyle { get }
+    
+    /// The position where the toast view will appear.
+    var alignment: STKAlignment { get }
 }
