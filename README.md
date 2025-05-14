@@ -9,11 +9,14 @@
 > **The simplest way to show toast view in your SwiftUI project.**
   
   
-# 📒 Latest Release Note 
+# 📒 Latest Release Note (2.2.3)
 ### Added
 - Add padding option to SimpleToast. (2025-05-13)  
   This option was added because the toast view was positioned directly above the tab bar,  
   which made it necessary to provide a padding option.
+  
+- Add alignment option to SimpleToast & custom toastview. (2025-05-14)
+  This option was added to support cases where the toast view needs to appear in the middle or at the top of the screen.  
   
 ### Fixed
 - Slide bottom animation now dismisses correctly. (2025-05-11)  
@@ -107,11 +110,12 @@ Trigger the toast view by accessing `STK.toast` and calling the `show` function.
 
 - **holdSec**: The number of seconds the toast view remains visible.
 - **animationStyle**: The animation style used for presenting and dismissing the toast.
+- **alignment**: The position where the toast view will appear. 
 - **content**: A view builder closure that provides the custom content for the toast.
 
 ```swift
 Button {
-    STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade) {
+    STK.toast.show(holdSec: 1.0, animationStyle: .scaledFade, alignment: .bottom) {
         YourCustomView()
     }
 } label: {
@@ -157,12 +161,18 @@ SimpleToast can be customized using modifier-style functions.
 #### modifiers
 - **.toastAnimation**: The animation style used for presenting and dismissing the toast.
 - **.toastShape**: Configures the shape and styling of the toast. Each shape supports specific customization parameters.
+- **.topPadding**: The top padding of simpleToastView
+- **.bottomPadding**: The bottom padding of simpleToastView
+- **.alignment**: The position where the toast view will appear. 
 
 ```swift
 Button {
     STK.toast.showSimple {
         SimpleToast(message: "Message is required", holdSec: 2.0)
             .toastAnimation(STKAnimationStyle.scaledFade)
+            .topPadding(12)
+            .bottomPadding(12)
+            .alignment(.center)
             .toastShape(
                 .roundedRectangle(
                     alignment: .leading,
