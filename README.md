@@ -15,7 +15,7 @@
   This option was added because the toast view was positioned directly above the tab bar,  
   which made it necessary to provide a padding option.
   
-- Add alignment option to SimpleToast & custom toastview. (2025-05-14)
+- Add alignment option to SimpleToast & custom toastview. (2025-05-14)  
   This option was added to support cases where the toast view needs to appear in the middle or at the top of the screen.  
   
 ### Fixed
