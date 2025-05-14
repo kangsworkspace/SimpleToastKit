@@ -25,4 +25,6 @@ internal struct ToastViewData {
     ///
     /// This content is provided as an 'AnyView' to allow flexible customization internally
     let content: AnyView
+    /// The position where the toast view will appear.
+    let alignment: STKAlignment
 }

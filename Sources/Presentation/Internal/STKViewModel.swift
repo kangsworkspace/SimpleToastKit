@@ -47,6 +47,9 @@ extension STKViewModel {
         
         /// The animation style applied to the toast's presentation and dismissal.
         var animationStyle: STKAnimationStyle = STKAnimationStyle.fade
+        
+        /// The position where the toast view will appear.
+        var alignment: STKAlignment = .bottom
     }
     
     /// An enumeration representing user intents that affect the toast view.
@@ -87,6 +90,7 @@ extension STKViewModel {
             .sink { [weak self] toastActiveState in
                 self?.state.toastContent = AnyView(toastViewData.content)
                 self?.state.animationStyle = toastViewData.animationStyle
+                self?.state.alignment = toastViewData.alignment
                 
                 withAnimation(toastViewData.animationStyle.animation) {
                     self?.state.isToastActive = toastActiveState
@@ -119,6 +123,7 @@ extension STKViewModel: STKStateProvider {
     public var simpleToast: SimpleToast { state.simpleToast }
     public var toastContent: AnyView { state.toastContent }
     public var animationStyle: STKAnimationStyle { state.animationStyle }
+    public var alignment: STKAlignment { state.alignment }
 }
 
 
@@ -126,8 +131,9 @@ extension STKViewModel: STKStateProvider {
 
 extension STKViewModel: STKTrigger {
     public func show<Content: View>(
-        holdSec: Double = STKDefaults.holdSec,
-        animationStyle: STKAnimationStyle = STKDefaults.animationStyle,
+        holdSec: Double,
+        animationStyle: STKAnimationStyle,
+        alignment: STKAlignment,
         @ViewBuilder content: () -> Content
     ) {
         let anyView = AnyView(content())
@@ -138,7 +144,8 @@ extension STKViewModel: STKTrigger {
                     ToastViewData(
                         holdSec: holdSec,
                         animationStyle: animationStyle,
-                        content: anyView
+                        content: anyView,
+                        alignment: alignment
                     )
                 )
             )

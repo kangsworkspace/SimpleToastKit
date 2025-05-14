@@ -26,6 +26,7 @@ public struct SimpleToast {
     internal var animationStyle: STKAnimationStyle = STKDefaults.animationStyle
     internal var bottomPadding: CGFloat = 0
     internal var topPadding: CGFloat = 0
+    internal var alignment: STKAlignment = STKDefaults.alignemnt
     
     // Initializer for only set message
     public init(message: String) {
@@ -64,6 +65,12 @@ extension SimpleToast {
     public func topPadding(_ padding: CGFloat) -> SimpleToast {
         var copy = self
         copy.bottomPadding = padding
+        return copy
+    }
+    
+    public func alignment(_ alignment: STKAlignment) -> SimpleToast {
+        var copy = self
+        copy.alignment = alignment
         return copy
     }
 }
