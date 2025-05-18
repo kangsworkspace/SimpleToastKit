@@ -17,47 +17,110 @@ import Combine
 ///   This protocol is not intended to be implemented or used directly by external users.
 ///   It defines the standard flow of toast presentation logic internally.
 internal protocol STKUseCaseProtocol {
-    /// Sets a timer that controls the visibility of a toast view.
+    /// A publisher that emits toast activation state for custom toast views.
     ///
-    /// Immediately return `true` to indicate that the toast should appear,
-    /// and then return `false` after the specified `holdSec` duration to indicate that the toast should disappear.
+    /// Immediately emits `true` to indicate that the toast should appear,
+    /// and then emits `false` after the specified `holdSec` duration to indicate that the toast should disappear.
+    var toastActivation: AnyPublisher<Bool, Never> { get }
+    
+    /// A publisher that emits toast activation states for default simple toast views.
     ///
-    /// - Parameter holdSec: The number of seconds the toast view remains visible.
-    /// - Returns:
-    ///   An `AnyPublisher<Bool, Never>` that return the toast view's active state changes.
-    func setToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never>
+    /// Immediately emits `true` to indicate that the toast should appear,
+    /// and then emits `false` after the specified `holdSec` duration to indicate that the toast should disappear.
+    var simpleToastActivation: AnyPublisher<Bool, Never> { get }
     
     /// Sets a timer that controls the visibility of a toast view.
     ///
-    /// Immediately return `true` to indicate that the toast should appear,
-    /// and then return `false` after the specified `holdSec` duration to indicate that the toast should disappear.
+    /// - Parameter holdSec: The number of seconds the toast view remains visible.
+    func setToastViewTimer(holdSec: Double)
+    
+    /// Sets a timer that controls the visibility of a toast view.
     ///
     /// - Parameter holdSec: The number of seconds the toast view remains visible.
-    /// - Returns:
-    ///   An `AnyPublisher<Bool, Never>` that return the toast view's active state changes.
-    func setSimpleToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never>
+    func setSimpleToastViewTimer(holdSec: Double)
 }
 
 /// The default implementation of `STKUseCaseProtocol`.
 ///
 /// `STKUseCase` provides the standard behavior for managing
 /// toast view visibility based on a timer mechanism.
-internal struct STKUseCase: STKUseCaseProtocol {
-    internal func setToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never> {
-        Just(true)
-            .append(
-                Just(false)
-                    .delay(for: .seconds(holdSec), scheduler: RunLoop.main)
-            )
-            .eraseToAnyPublisher()
+internal final class STKUseCase: STKUseCaseProtocol {
+    
+    // MARK: Toast view
+    
+    private let toastSubject = CurrentValueSubject<Bool, Never>(false)
+    private var toastCancellables = Set<AnyCancellable>()
+
+    internal var toastActivation: AnyPublisher<Bool, Never> {
+        toastSubject.eraseToAnyPublisher()
     }
     
-    internal func setSimpleToastViewTimer(holdSec: Double) -> AnyPublisher<Bool, Never> {
-        Just(true)
+
+    // MARK: Simple toast view
+    
+    private let simpleToastSubject = CurrentValueSubject<Bool, Never>(false)
+    private var simpleToastCancellables = Set<AnyCancellable>()
+
+    internal var simpleToastActivation: AnyPublisher<Bool, Never> {
+        simpleToastSubject.eraseToAnyPublisher()
+    }
+    
+    
+    init() {}
+    
+    internal func setToastViewTimer(holdSec: Double) {
+        let isActive = toastSubject.value
+        
+        toastCancellables.removeAll()
+        
+        let toastStream = Just(true)
             .append(
                 Just(false)
-                    .delay(for: .seconds(holdSec), scheduler: RunLoop.main)
+                    .delay(for: .seconds(holdSec),scheduler: RunLoop.main)
             )
-            .eraseToAnyPublisher()
+        
+        let cancelStream = Just(false)
+            .append(
+                Just(true)
+                    .delay(for: .seconds(0.36),scheduler: RunLoop.main)
+            )
+        
+        let fullStream = isActive
+        ? cancelStream.append(toastStream).eraseToAnyPublisher()
+        : toastStream.eraseToAnyPublisher()
+        
+        fullStream
+            .sink { [weak self] in
+                self?.toastSubject.send($0)
+            }
+            .store(in: &toastCancellables)
+    }
+    
+    internal func setSimpleToastViewTimer(holdSec: Double) {
+        let isActive = simpleToastSubject.value
+        
+        simpleToastCancellables.removeAll()
+        
+        let toastStream = Just(true)
+            .append(
+                Just(false)
+                    .delay(for: .seconds(holdSec),scheduler: RunLoop.main)
+            )
+        
+        let cancelStream = Just(false)
+            .append(
+                Just(true)
+                    .delay(for: .seconds(0.36),scheduler: RunLoop.main)
+            )
+        
+        let fullStream = isActive
+        ? cancelStream.append(toastStream).eraseToAnyPublisher()
+        : toastStream.eraseToAnyPublisher()
+        
+        fullStream
+            .sink { [weak self] in
+                self?.simpleToastSubject.send($0)
+            }
+            .store(in: &toastCancellables)
     }
 }
