@@ -128,8 +128,6 @@ internal struct STKModifier<ToastState: STKStateProvider>: ViewModifier {
                     .foregroundStyle(backgroundColor)
             }
             .fixedSize()
-            .padding(.bottom, simpleToast.bottomPadding)
-            .padding(.top, simpleToast.topPadding)
         } else {
             EmptyView()
         }
