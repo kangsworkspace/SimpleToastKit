@@ -23,18 +23,30 @@ internal struct STKModifier<ToastState: STKStateProvider>: ViewModifier {
             
             if toastState.isToastActive {
                 VStack {
-                    Spacer()
+                    if toastState.alignment == .bottom || toastState.alignment == .center {
+                        Spacer()
+                    }
                     
                     toastState.toastContent
+
+                    if toastState.alignment == .top || toastState.alignment == .center {
+                        Spacer()
+                    }
                 }
                 .transition(toastState.animationStyle.transition)
             }
             
             if toastState.isSimpeToastActive {
                 VStack {
-                    Spacer()
+                    if toastState.simpleToast.alignment == .bottom || toastState.simpleToast.alignment == .center {
+                        Spacer()
+                    }
                     
                     simpleToastBuilder(simpleToast: toastState.simpleToast)
+                    
+                    if toastState.simpleToast.alignment == .top || toastState.simpleToast.alignment == .center {
+                        Spacer()
+                    }
                 }
                 .transition(toastState.animationStyle.transition)
             }

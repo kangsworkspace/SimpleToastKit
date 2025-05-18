@@ -61,11 +61,11 @@ extension STKAnimationStyle: STKAnimationProtocol {
         case .scaledFade:
             return Animation.easeInOut(duration: 0.3)
         case .slideBottom:
-            return Animation.spring(duration: 0.4, bounce: 0.1)
+            return Animation.easeInOut(duration: 0.3)
         case .slideLeft:
-            return Animation.easeInOut(duration: 0.4)
+            return Animation.easeInOut(duration: 0.3)
         case .slideRight:
-            return Animation.easeOut(duration: 0.4)
+            return Animation.easeOut(duration: 0.3)
         }
     }
 }
