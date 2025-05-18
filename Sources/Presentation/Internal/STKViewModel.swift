@@ -24,7 +24,35 @@ internal final class STKViewModel: ObservableObject {
     
     private let usecase: STKUseCaseProtocol
     private var cancellables: Set<AnyCancellable> = []
-    private init(usecase: STKUseCaseProtocol) { self.usecase = usecase }
+    
+    private init(usecase: STKUseCaseProtocol) {
+        self.usecase = usecase
+        subscribeUsecase()
+    }
+    
+    func subscribeUsecase() {
+        usecase.toastActivation
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isActive in
+                guard let self else { return }
+                
+                withAnimation(self.state.animationStyle.animation) {
+                    self.state.isToastActive = isActive
+                }
+            }
+            .store(in: &cancellables)
+        
+        usecase.simpleToastActivation
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isActive in
+                guard let self else { return }
+                
+                withAnimation(self.state.animationStyle.animation) {
+                    self.state.isSimpleToastActive = isActive
+                }
+            }
+            .store(in: &cancellables)
+    }
 }
 
 
@@ -85,32 +113,19 @@ extension STKViewModel {
     ///
     /// - Parameter toastViewData: The data describing the toast's appearance and behavior.
     func handleActivateToastView(_ toastViewData: ToastViewData) {
+        state.toastContent = AnyView(toastViewData.content)
+        state.animationStyle = toastViewData.animationStyle
+        state.alignment = toastViewData.alignment
+        
         usecase.setToastViewTimer(holdSec: toastViewData.holdSec)
-            .receive(on: RunLoop.main)
-            .sink { [weak self] toastActiveState in
-                self?.state.toastContent = AnyView(toastViewData.content)
-                self?.state.animationStyle = toastViewData.animationStyle
-                self?.state.alignment = toastViewData.alignment
-                
-                withAnimation(toastViewData.animationStyle.animation) {
-                    self?.state.isToastActive = toastActiveState
-                }
-            }
-            .store(in: &cancellables)
     }
     
     func handleActiveSimpleToastView(_ simpleToast: SimpleToast) {
+        state.simpleToast = simpleToast
+        state.animationStyle = simpleToast.animationStyle
+        state.alignment = simpleToast.alignment
+        
         usecase.setSimpleToastViewTimer(holdSec: simpleToast.holdSec)
-            .receive(on: RunLoop.main)
-            .sink { [weak self] simpleToastActiveState in
-                self?.state.simpleToast = simpleToast
-                self?.state.animationStyle = simpleToast.animationStyle
-                
-                withAnimation(simpleToast.animationStyle.animation) {
-                    self?.state.isSimpleToastActive = simpleToastActiveState
-                }
-            }
-            .store(in: &cancellables)
     }
 }
 
