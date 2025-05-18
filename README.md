@@ -9,7 +9,7 @@
 > **The simplest way to show toast view in your SwiftUI project.**
   
   
-# 📒 Latest Release Note (2.2.3)
+# 📒 Latest Release Note (2.2.4)
 ### Added
 - Add padding option to SimpleToast. (2025-05-13)  
   This option was added because the toast view was positioned directly above the tab bar,  
@@ -23,7 +23,8 @@
   A bug where the toast view disappeared with a fade animation instead of sliding back to the bottom has been resolved.
   
 ### Changed
-- 
+- Improved feedback for repeated button taps. (2025-05-18)  
+  When the button is tapped rapidly or repeatedly, the toast view now disappears and reappears more smoothly, making the transition feel more natural.
 
 
 # 👀 At a glance 
@@ -214,7 +215,7 @@ Button {
 <br/>
 
 # 🏗️ Architecture structure
-<img width="1072" alt="Image" src="https://github.com/user-attachments/assets/81db509e-52e0-43a6-ab42-2d26e8a000ed" />
+<img width="1067" alt="Image" src="https://github.com/user-attachments/assets/b7de925b-6084-4003-af11-0698e81cb70e" />
 
 <br/>
 
