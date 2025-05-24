@@ -17,18 +17,29 @@ import Combine
 ///   This class is internal and not intended for direct use by external users.
 internal final class STKViewModel: ObservableObject {
     /// The shared singleton instance for managing the toast system.
-    @MainActor static let shared = STKViewModel(usecase: STKUseCase())
+    @MainActor static let shared = STKViewModel()
     
     /// The current state of the toast view.
     @Published private var state: State = State()
     
-    private let usecase: STKUseCaseProtocol
+    private var usecase: STKUseCaseProtocol = STKUseCase()
     private var cancellables: Set<AnyCancellable> = []
     
-    private init(usecase: STKUseCaseProtocol) {
+    #if DEBUG
+    /// Inject `STKUseCaseProtocol` type Usecase
+    ///
+    /// > Warning:
+    ///   This function is only for testing purpose.
+    ///   Do not use this for release code.
+    internal func injectUsecase(_ usecase: STKUseCaseProtocol) {
         self.usecase = usecase
+        
+        cancellables.removeAll()
         subscribeUsecase()
     }
+    #endif
+    
+    private init() {subscribeUsecase() }
     
     func subscribeUsecase() {
         usecase.toastActivation
