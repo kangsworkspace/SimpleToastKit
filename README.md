@@ -13,6 +13,9 @@
 ### Added
 - Added ``.slideTop`` Animation. (2025-05-21)  
   Useful when toast view is aligned to the top.
+
+- Added `injectUsecase(_:)` method in `ViewModel`. (2025-05-24)  
+  Only available in DEBUG mode for injecting mock use cases in tests.
   
 ### Fixed
   
