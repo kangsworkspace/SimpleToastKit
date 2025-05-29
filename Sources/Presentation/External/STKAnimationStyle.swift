@@ -17,7 +17,9 @@ public enum STKAnimationStyle {
     case fade
     /// Appears from the front and fades out toward the back, using a combination of scale and opacity transitions.
     case scaledFade
-    /// Slides in from the bottom and exits to the bottom. using move and opacity
+    /// Slides in from the top and exits to the top. using move and opacity
+    case slideTop
+    /// Slides in from the left and exits to the left. using move and opacity
     case slideBottom
     /// Slides in from the left and exits to the left. using move and opacity
     case slideLeft
@@ -40,6 +42,8 @@ extension STKAnimationStyle: STKAnimationProtocol {
             return AnyTransition.asymmetric(
                     insertion: .scale(scale: 1.2).combined(with: .opacity),
                     removal: .scale(scale: 0.8).combined(with: .opacity))
+        case .slideTop:
+            return AnyTransition.move(edge: .top).combined(with: .opacity)
         case .slideBottom:
             return AnyTransition.move(edge: .bottom).combined(with: .opacity)
         case .slideLeft:
@@ -59,6 +63,8 @@ extension STKAnimationStyle: STKAnimationProtocol {
         case .fade:
             return .easeInOut(duration: 0.3)
         case .scaledFade:
+            return Animation.easeInOut(duration: 0.3)
+        case .slideTop:
             return Animation.easeInOut(duration: 0.3)
         case .slideBottom:
             return Animation.easeInOut(duration: 0.3)
