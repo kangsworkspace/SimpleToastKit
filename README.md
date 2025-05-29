@@ -9,7 +9,7 @@
 > **The simplest way to show toast view in your SwiftUI project.**
   
   
-# 📒 Latest Release Note (2.2.4)
+# 📒 Latest Release Note (2.2.5)
 ### Added
 - Added ``.slideTop`` Animation. (2025-05-21)  
   Useful when toast view is aligned to the top.
@@ -18,6 +18,8 @@
   Only available in DEBUG mode for injecting mock use cases in tests.
   
 ### Fixed
+- Fixed archive error. (2025-05-29)  
+  Change type `.static` to `.dynamic`
   
 ### Changed
 
