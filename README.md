@@ -9,17 +9,14 @@
 > **The simplest way to show toast view in your SwiftUI project.**
   
   
-# 📒 Latest Release Note (2.2.5)
+# 📒 Latest Release Note (2.3.0)
 ### Added
-- Added ``.slideTop`` Animation. (2025-05-21)  
-  Useful when toast view is aligned to the top.
-
-- Added `injectUsecase(_:)` method in `ViewModel`. (2025-05-24)  
-  Only available in DEBUG mode for injecting mock use cases in tests.
   
 ### Fixed
-- Fixed archive error. (2025-05-29)  
-  Change type `.static` to `.dynamic`
+- Fixed archive error. (2025-06-01)  
+  Refactored the main entry point logic to resolve linker issues.  
+  Changed `STK` from an `enum` to a concrete implementation type.
+  The implementaion type and its methods are now exposed but cannot be used.
   
 ### Changed
 
@@ -213,13 +210,16 @@ Button {
 <br/>
 
 # 🏗️ Architecture structure
-<img width="1067" alt="Image" src="https://github.com/user-attachments/assets/b7de925b-6084-4003-af11-0698e81cb70e" />
+<img width="1207" alt="스크린샷 2025-06-01 오후 8 44 04" src="https://github.com/user-attachments/assets/b42c170e-9c47-42d5-8717-39fe16cec07e" />
+<img width="1077" alt="스크린샷 2025-06-01 오후 8 59 55" src="https://github.com/user-attachments/assets/932d5d10-c609-4e32-ac22-a52493068530" />
+
 
 <br/>
 
 # 📦 Installation
 
 SimpleToastKit supports installation via [Swift Package Manager](https://swift.org/package-manager).
+
 
 Add the following to your `Package.swift` dependencies:
 
