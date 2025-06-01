@@ -9,17 +9,14 @@
 > **The simplest way to show toast view in your SwiftUI project.**
   
   
-# 📒 Latest Release Note (2.2.5)
+# 📒 Latest Release Note (2.3.0)
 ### Added
-- Added ``.slideTop`` Animation. (2025-05-21)  
-  Useful when toast view is aligned to the top.
-
-- Added `injectUsecase(_:)` method in `ViewModel`. (2025-05-24)  
-  Only available in DEBUG mode for injecting mock use cases in tests.
   
 ### Fixed
-- Fixed archive error. (2025-05-29)  
-  Change type `.static` to `.dynamic`
+- Fixed archive error. (2025-06-01)  
+  Refactored the main entry point logic to resolve linker issues.  
+  Changed `STK` from an `enum` to a concrete implementation type.
+  The implementaion type and its methods are now exposed but cannot be used.
   
 ### Changed
 
