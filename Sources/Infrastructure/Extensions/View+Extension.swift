@@ -26,6 +26,6 @@ public extension View {
     /// Otherwise, it may cause unexpected behavior or conflicts.
     /// - Returns: Returns A view modified with `ToastViewModifier`
     func toastable() -> some View {
-        self.modifier(STKModifier(toastState: STK.internalShared))
+        self.modifier(STKModifier(toastState: STKViewModel.shared))
     }
 }

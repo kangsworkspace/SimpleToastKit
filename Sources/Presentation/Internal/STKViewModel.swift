@@ -155,7 +155,7 @@ extension STKViewModel: STKStateProvider {
 
 // MARK: STKTrigger - Accept user action
 
-extension STKViewModel: STKTrigger {
+extension STKViewModel: STKTriggerProtocol {
     public func show<Content: View>(
         holdSec: Double,
         animationStyle: STKAnimationStyle,
