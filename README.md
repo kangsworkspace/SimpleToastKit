@@ -207,6 +207,19 @@ Button {
 }
 ```
 
+## Animation examples
+| STKAnimationStyle.fade | STKAnimationStyle.scaledFade |
+|:-:|:-:|
+| <img src = "https://github.com/user-attachments/assets/452d9bd1-d534-4c2f-bac4-c048ac13d472" width="180" /> | <img src = "https://github.com/user-attachments/assets/5004880a-9cd0-4579-86dc-6b47f7768985" width="180" /> |
+
+| STKAnimationStyle.slideBottom | STKAnimationStyle.slideTop |
+|:-:|:-:|
+| <img src = "https://github.com/user-attachments/assets/8c291686-ca54-48cf-876c-bcf7c7c42e25" width="180" /> | <img src = "https://github.com/user-attachments/assets/ee9e78c2-467b-4217-b298-93a6cbc19579" width="180" /> |
+
+| STKAnimationStyle.slideLeft | STKAnimationStyle.slideRight |
+|:-:|:-:|
+| <img src = "https://github.com/user-attachments/assets/b89da0df-5d1c-4a3a-b254-3a13181f66fb" width="180" /> | <img src = "https://github.com/user-attachments/assets/4bedd664-7a01-48b7-abc2-1e88d540535b" width="180" /> |
+
 <br/>
 
 # 🏗️ Architecture structure
